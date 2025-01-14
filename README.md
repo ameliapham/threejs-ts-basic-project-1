@@ -1,6 +1,6 @@
 # Threejs + TypeScript + Vite
 
-A minimal setup [THREE.js](https://threejs.org/) project in [TypeScript](https://www.typescriptlang.org/) with [Vite](https://vitejs.dev/).
+A basic project ThreeJS in TypeScript
 
 ## Getting started
 
