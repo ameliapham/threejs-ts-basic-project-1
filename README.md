@@ -1,6 +1,6 @@
 # Threejs + TypeScript + Vite
 
-A basic project ThreeJS in TypeScript
+A 1st basic project ThreeJS in TypeScript
 
 ## Getting started
 
