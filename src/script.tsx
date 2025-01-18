@@ -7,10 +7,15 @@ console.log("Hello, Three.js with TypeScript!");
 const scene = new THREE.Scene();
 
 // Set up camera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
 camera.position.z = 5;
 
 scene.add(camera);
+
+// Axes helper
+const axesHelper = new THREE.AxesHelper(2);
+
+scene.add(axesHelper);
 
 // Create object
 const geometry = new THREE.BoxGeometry(1,1,1);
