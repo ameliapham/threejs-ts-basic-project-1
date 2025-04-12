@@ -46,8 +46,9 @@ const geometryLeft = new THREE.BufferGeometry();
 const geometryRight = new THREE.BufferGeometry();
 const pointsLeft = [];
 const pointsRight = [];
+const colors = []
 
-const steps = 500;
+const steps = 2000;
 for (let i = 0; i < steps; i++) {
   const t = (i / steps) * 24 * Math.PI;
   const r = Math.exp(Math.sin(t)) - 2 * Math.cos(4 * t) + Math.pow(Math.sin((2 * t - Math.PI) / 24), 5);
@@ -57,14 +58,25 @@ for (let i = 0; i < steps; i++) {
 
   pointsLeft.push(x, y, z);
   pointsRight.push(-x, y, z);
+
+  const pct = i / steps;
+  const rCol = 1 - pct;
+  const gCol = 0.2;
+  const bCol = pct;
+  colors.push(rCol, gCol, bCol);
+
 }
 
 const verticesLeft = new Float32Array(pointsLeft);
 const verticesRight = new Float32Array(pointsRight);
+const colorAttr = new Float32Array(colors);
+
 geometryLeft.setAttribute( "position", new THREE.BufferAttribute(verticesLeft, 3));
 geometryRight.setAttribute( "position", new THREE.BufferAttribute(verticesRight, 3));
+geometryLeft.setAttribute( "color", new THREE.BufferAttribute(colorAttr, 3));
+geometryRight.setAttribute( "color", new THREE.BufferAttribute(colorAttr, 3));
 
-const materialButterfly = new THREE.PointsMaterial({ color: 0xff66cc, size: 0.05,});
+const materialButterfly = new THREE.PointsMaterial({ vertexColors: true, size: 0.01,});
 
 const wingLeft = new THREE.Points(geometryLeft, materialButterfly);
 const wingRight = new THREE.Line(geometryRight, materialButterfly);
