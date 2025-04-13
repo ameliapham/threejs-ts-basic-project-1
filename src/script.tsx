@@ -86,13 +86,27 @@ butterfly.add(wingLeft);
 butterfly.add(wingRight);
 scene.add(butterfly);
 
+// Camera with mouse control
+const cursor = {
+    x: 0,
+    y: 0,
+}
 
+window.addEventListener("mousemove", (event) => {
+    cursor.x = (event.clientX / window.innerWidth) * 2 - 1;
+    cursor.y = -(event.clientY / window.innerHeight) * 2 + 1;
+});
 
+const animation = () => {
+    camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3
+    camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3
+    camera.position.y = Math.sin(cursor.y * Math.PI * 2) * 3
+    camera.lookAt(group.position)
 
-// Set up renderer
-const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
-const renderer = new THREE.WebGLRenderer({ canvas : canvas });
+    // Render
+    renderer.render(scene, camera)
 
-renderer.setSize(window.innerWidth, window.innerHeight);
+    window.requestAnimationFrame(animation)
+}
+animation()
 
-renderer.render(scene, camera);
