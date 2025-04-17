@@ -58,7 +58,6 @@ for (let i = 0; i < steps; i++) {
 
   pointsLeft.push(x, y, z);
   pointsRight.push(-x, y, z);
-
   const pct = i / steps;
   const rCol = 1 - pct;
   const gCol = 0.2;
@@ -97,16 +96,21 @@ window.addEventListener("mousemove", (event) => {
     cursor.y = -(event.clientY / window.innerHeight) * 2 + 1;
 });
 
-const animation = () => {
-    camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3
-    camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3
-    camera.position.y = Math.sin(cursor.y * Math.PI * 2) * 3
-    camera.lookAt(group.position)
+
+// Set up renderer
+const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
+const renderer = new THREE.WebGLRenderer({ canvas : canvas });
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+// Animation
+function animation() {
+    // Update butterfly rotation
+    butterfly.rotation.y += 0.01;
 
     // Render
-    renderer.render(scene, camera)
+    renderer.render(scene, camera);
 
-    window.requestAnimationFrame(animation)
+    requestAnimationFrame(animation);
 }
-animation()
-
+animation();
