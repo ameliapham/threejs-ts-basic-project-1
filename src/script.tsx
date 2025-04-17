@@ -105,16 +105,23 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 
 // Animation
-let previousTime = performance.now(); 
+//let previousTime = performance.now(); 
 
 function animation() {
     //Time 
-    const currentTime = performance.now()
-    const deltaTime = ( currentTime - previousTime ) / 1000; // Convert to seconds
-    previousTime = currentTime;
+    //const currentTime = performance.now()
+    //const deltaTime = ( currentTime - previousTime ) / 1000; // Convert to seconds
+    //previousTime = currentTime;
+
+    gsap.to(butterfly.rotation, {
+        y: "+=" + Math.PI * 2,
+        duration: 5,
+        ease: "none",
+        repeat: -1,
+    })
 
     // Update butterfly rotation
-    butterfly.rotation.y += 0.5 * deltaTime;
+    //butterfly.rotation.y += 0.5 * deltaTime;
 
     // Render
     renderer.render(scene, camera);
