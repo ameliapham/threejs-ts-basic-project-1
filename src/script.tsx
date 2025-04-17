@@ -103,25 +103,30 @@ const renderer = new THREE.WebGLRenderer({ canvas : canvas });
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 
+
+// Animation
+let previousTime = performance.now(); 
+/*
 gsap.to(butterfly.rotation, {
     y: "+=" + Math.PI * 2,
     duration: 5,
     ease: "none",
     repeat: -1,
 })
-
-// Animation
-//let previousTime = performance.now(); 
+*/
 
 function animation() {
     //Time 
-    //const currentTime = performance.now()
-    //const deltaTime = ( currentTime - previousTime ) / 1000; // Convert to seconds
-    //previousTime = currentTime;
+    const currentTime = performance.now()
+    const deltaTime = ( currentTime - previousTime ) / 1000; // Convert to seconds
+    previousTime = currentTime;
  
 
     // Update butterfly rotation
     //butterfly.rotation.y += 0.5 * deltaTime;
+    gsap.set(butterfly.rotation, {
+        y: "+=" + 0.5 * deltaTime
+    })
 
     // Render
     renderer.render(scene, camera);
