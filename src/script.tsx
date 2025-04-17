@@ -103,10 +103,18 @@ const renderer = new THREE.WebGLRenderer({ canvas : canvas });
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 
+
 // Animation
+let previousTime = performance.now(); 
+
 function animation() {
+    //Time 
+    const currentTime = performance.now()
+    const deltaTime = ( currentTime - previousTime ) / 1000; // Convert to seconds
+    previousTime = currentTime;
+
     // Update butterfly rotation
-    butterfly.rotation.y += 0.01;
+    butterfly.rotation.y += 0.5 * deltaTime;
 
     // Render
     renderer.render(scene, camera);
