@@ -56,12 +56,11 @@ for (let i = 0; i < steps; i++) {
 
   pointsLeft.push(x, y, z);
   pointsRight.push(-x, y, z);
+  
   const pct = i / steps;
-  const rCol = 1 - pct;
-  const gCol = 0.2;
-  const bCol = pct;
-  colors.push(rCol, gCol, bCol);
-
+  const color = new THREE.Color();
+  color.setHSL(0.85 - 0.5 * pct, 1 - pct, pct);
+  colors.push(color.r, color.g, color.b);
 }
 
 const verticesLeft = new Float32Array(pointsLeft);
