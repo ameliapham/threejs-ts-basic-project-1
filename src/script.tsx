@@ -101,6 +101,7 @@ scene.add(camera);
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true;
 
 // Set up renderer
 const renderer = new THREE.WebGLRenderer({ canvas : canvas });
@@ -143,6 +144,9 @@ function animation() {
     //camera.position.y = cursor.y * 2
     
     //camera.lookAt(butterfly.position);
+
+    // Update controls
+    controls.update();
 
     // Render
     renderer.render(scene, camera);
