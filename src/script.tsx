@@ -7,10 +7,6 @@ console.log("Hello, Three.js with TypeScript!");
 // Set up scene
 const scene = new THREE.Scene();
 
-// Set up camera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
-camera.position.z = 5;
-scene.add(camera);
 
 // Axes helper
 const axesHelper = new THREE.AxesHelper(2);
@@ -96,6 +92,10 @@ window.addEventListener("mousemove", (event) => {
     cursor.y = -(event.clientY / window.innerHeight) * 2 + 1;
 });
 
+// Set up camera
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
+camera.position.set(0, 0, 5);
+scene.add(camera);
 
 // Set up renderer
 const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
@@ -114,13 +114,14 @@ gsap.to(butterfly.rotation, {
     repeat: -1,
 })
 
-gsap.to(camera.position, {
-    z: 10,
+/*
+gsap.to(butterfly.position, {
+    z: -10,
     duration: 5,
     yoyo: true,
     repeat: -1,
     ease: "power1.inOut",
-})
+})*/
 
 function animation() {
     //Time 
@@ -131,6 +132,13 @@ function animation() {
     // Update butterfly rotation
     //butterfly.rotation.y += 0.5 * deltaTime;
     //gsap.set(butterfly.rotation, {y: "+=" + 0.5 * deltaTime})
+
+    // Update camera
+    camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 5
+    camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 5
+    camera.position.y = cursor.y * 2
+    
+    camera.lookAt(butterfly.position);
 
     // Render
     renderer.render(scene, camera);
