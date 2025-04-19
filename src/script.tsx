@@ -75,6 +75,17 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 camera.position.set(0, 0, 5);
 scene.add(camera);
 
+// ----- Resize -----
+window.addEventListener("resize", () => {
+    // Update camera
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    // Update renderer
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+})
+
 // ----- Controls -----
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true;
@@ -82,6 +93,7 @@ controls.enableDamping = true;
 // ----- Setup Renderer -----
 const renderer = new THREE.WebGLRenderer({ canvas : canvas });
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)) // Set pixel Ratio
 
 // ----- Animation -----
 gsap.to(butterfly.rotation, {
@@ -101,12 +113,12 @@ gsap.to(butterfly.position, {
 })*/
 
 // ----- Render Loop -----
-function animation() {
+function animate() {
     // Update controls
     controls.update();
 
     // Renderer
     renderer.render(scene, camera);
-    requestAnimationFrame(animation);
+    requestAnimationFrame(animate);
 }
-animation();
+animate();
