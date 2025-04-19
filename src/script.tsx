@@ -16,10 +16,11 @@ const axesHelper = new THREE.AxesHelper(2);
 scene.add(axesHelper);
 
 // ----- Create Object -----
-function createButterflyGeometry(steps: number) {
+function createButterflyGeometry(steps: number, hsl: {h: number, s: number, l: number} ) {
     const pointsLeft: number[] = [];
     const pointsRight: number[] = [];
     const colors: number[] = [] 
+    const { h, s, l } = hsl;
 
     for (let i = 0; i < steps; i++) {
         const t = (i / steps) * 24 * Math.PI;
@@ -37,7 +38,11 @@ function createButterflyGeometry(steps: number) {
         const pct = i / steps;
 
         const color = new THREE.Color();
-        color.setHSL(0.85 - 0.5 * pct, 1 - pct, pct);
+        color.setHSL(
+            (h - 0.3 * pct + 1) % 1,
+            s,
+            l * pct
+        );
         colors.push(color.r, color.g, color.b);
     }
 
@@ -60,7 +65,7 @@ function createButterflyGeometry(steps: number) {
     return { geometryLeft, geometryRight };
 }
 
-const { geometryLeft, geometryRight } = createButterflyGeometry(2000);
+const { geometryLeft, geometryRight } = createButterflyGeometry(2000,  {h: 0.85, s: 0.8, l: 0.5});
 
 const materialButterfly = new THREE.PointsMaterial({ vertexColors: true, size: 0.01 });
 
@@ -105,7 +110,6 @@ const rotateButterfly = gsap.to(butterfly.rotation, {
     paused: true,
 })
 
-
 // ----- Render Loop -----
 function animate() {
     // Update controls
@@ -127,6 +131,20 @@ const butterflyFolder = gui.addFolder("Butterfly Controls");
 const butterflySettings = {
     rotate: false,
     steps: 2000,
+    hsl : {
+        h: 0.85,
+        s: 0.8,
+        l: 0.5
+    }
+}
+
+function updateButterfly() {
+    const {geometryLeft, geometryRight} = createButterflyGeometry(butterflySettings.steps, butterflySettings.hsl);
+
+    wingLeft.geometry.dispose();
+    wingRight.geometry.dispose();
+    wingLeft.geometry = geometryLeft;
+    wingRight.geometry = geometryRight;
 }
 
 // GUI Position
@@ -135,14 +153,6 @@ butterflyFolder.add(butterfly.position, "y").min(-3).max(3).step(0.01);
 butterflyFolder.add(butterfly.position, "z").min(-3).max(3).step(0.01);
 
 
-function updateButterfly() {
-    const {geometryLeft, geometryRight} = createButterflyGeometry(butterflySettings.steps);
-
-    wingLeft.geometry.dispose();
-    wingRight.geometry.dispose();
-    wingLeft.geometry = geometryLeft;
-    wingRight.geometry = geometryRight;
-}
 // GUI Steps
 butterflyFolder
     .add(butterflySettings, "steps")
@@ -151,6 +161,13 @@ butterflyFolder
     .max(5000)
     .step(100)
     .onChange(() => updateButterfly())
+
+// GUI Color
+const colorControls = gui.addFolder("Color Controls");
+
+colorControls.add(butterflySettings.hsl, "h").name("Hue").min(0).max(1).step(0.01).onChange(() => updateButterfly());
+colorControls.add(butterflySettings.hsl, "s").name("Saturation").min(0).max(1).step(0.01).onChange(() => updateButterfly());    
+colorControls.add(butterflySettings.hsl, "l").name("Lightness").min(0).max(1).step(0.01).onChange(() => updateButterfly());
 
 // GUI Animation
 butterflyFolder
