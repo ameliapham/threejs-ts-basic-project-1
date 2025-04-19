@@ -123,8 +123,18 @@ animate();
 
 // ----- Debug UI -----
 const gui = new GUI({
-    title: "Controls"
+    title: "Debug UI",
+    closeFolders: false,
 })
+gui.close();
+gui.hide();
+
+window.addEventListener("keydown", (event) => {
+    if (event.key === "g") {
+        gui.show(gui._hidden);
+    }
+})
+
 const butterflyFolder = gui.addFolder("Butterfly Controls");
 
 // GUI settings Definition
