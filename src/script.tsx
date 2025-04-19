@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import gsap from "gsap";
+import GUI from "lil-gui";
 
 console.log("Hello, Three.js with TypeScript!");
 
@@ -96,21 +97,14 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)) // Set pixel Ratio
 
 // ----- Animation -----
-gsap.to(butterfly.rotation, {
+const rotateButterfly = gsap.to(butterfly.rotation, {
     y: "+=" + Math.PI * 2,
     duration: 10,
     ease: "none",
     repeat: -1,
+    paused: true,
 })
 
-/*
-gsap.to(butterfly.position, {
-    z: -10,
-    duration: 5,
-    yoyo: true,
-    repeat: -1,
-    ease: "power1.inOut",
-})*/
 
 // ----- Render Loop -----
 function animate() {
@@ -122,3 +116,47 @@ function animate() {
     requestAnimationFrame(animate);
 }
 animate();
+
+// ----- Debug -----
+const gui = new GUI({
+    title: "Controls"
+})
+
+const butterflyFolder = gui.addFolder("Butterfly Controls");
+
+const butterflySettings = {
+    rotate: false,
+    steps: 2000,
+}
+
+// Position
+butterflyFolder.add(butterfly.position, "x").min(-3).max(3).step(0.01);
+butterflyFolder.add(butterfly.position, "y").min(-3).max(3).step(0.01);
+butterflyFolder.add(butterfly.position, "z").min(-3).max(3).step(0.01);
+
+// Steps
+butterflyFolder
+    .add(butterflySettings, "steps")
+    .name("Steps")
+    .min(100)
+    .max(5000)
+    .step(100)
+    .onChange((steps: number) => {
+        const {geometryLeft, geometryRight} = createButterflyGeometry(steps);
+        wingLeft.geometry.dispose();
+        wingRight.geometry.dispose();
+        wingLeft.geometry = geometryLeft;
+        wingRight.geometry = geometryRight;
+    })
+
+// Animation
+butterflyFolder
+    .add(butterflySettings, "rotate")
+    .name("Rotate")
+    .onChange(() => {
+        if (butterflySettings.rotate) {
+            rotateButterfly.play();
+        } else {
+            rotateButterfly.pause();
+        }
+    });
