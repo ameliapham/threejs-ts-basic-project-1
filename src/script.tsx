@@ -117,39 +117,42 @@ function animate() {
 }
 animate();
 
-// ----- Debug -----
+// ----- Debug UI -----
 const gui = new GUI({
     title: "Controls"
 })
-
 const butterflyFolder = gui.addFolder("Butterfly Controls");
 
+// GUI settings Definition
 const butterflySettings = {
     rotate: false,
     steps: 2000,
 }
 
-// Position
+// GUI Position
 butterflyFolder.add(butterfly.position, "x").min(-3).max(3).step(0.01);
 butterflyFolder.add(butterfly.position, "y").min(-3).max(3).step(0.01);
 butterflyFolder.add(butterfly.position, "z").min(-3).max(3).step(0.01);
 
-// Steps
+
+function updateButterfly() {
+    const {geometryLeft, geometryRight} = createButterflyGeometry(butterflySettings.steps);
+
+    wingLeft.geometry.dispose();
+    wingRight.geometry.dispose();
+    wingLeft.geometry = geometryLeft;
+    wingRight.geometry = geometryRight;
+}
+// GUI Steps
 butterflyFolder
     .add(butterflySettings, "steps")
     .name("Steps")
     .min(100)
     .max(5000)
     .step(100)
-    .onChange((steps: number) => {
-        const {geometryLeft, geometryRight} = createButterflyGeometry(steps);
-        wingLeft.geometry.dispose();
-        wingRight.geometry.dispose();
-        wingLeft.geometry = geometryLeft;
-        wingRight.geometry = geometryRight;
-    })
+    .onChange(() => updateButterfly())
 
-// Animation
+// GUI Animation
 butterflyFolder
     .add(butterflySettings, "rotate")
     .name("Rotate")
