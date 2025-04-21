@@ -1,9 +1,9 @@
 # Three.js + TypeScript + Vite Project
 
-This is my second basic project using **Three.js** with **TypeScript** and **Vite**.  
+My second basic project is using **Three.js** with **TypeScript** and **Vite**.  
 The focus is on learning how to create a custom **BufferGeometry** and implement a simple **debug UI** to tweak parameters in real-time.
 
-**Live Demo:** [Experience it here](https://threejs-ts-basic-project-2-butterfly.vercel.app/)
+**Live Demo:** [Experience it here](https://basic-butterfly.vercel.app/)
 
 ## Key Features
 - Custom buffer geometry creation
