@@ -1,11 +1,41 @@
-# Threejs + TypeScript + Vite
+# Three.js + TypeScript + Vite Project
 
-A 1st basic project ThreeJS in TypeScript
+This is my second basic project using **Three.js** with **TypeScript** and **Vite**.  
+The focus is on learning how to create a custom **BufferGeometry** and implement a simple **debug UI** to tweak parameters in real-time.
 
-## Getting started
+**Live Demo:** [Experience it here](https://threejs-ts-basic-project-2-butterfly.vercel.app/)
 
-Install dependencies.
-`yarn`
+## Key Features
+- Custom buffer geometry creation
+- Interactive debug UI panel
+- Keyboard-controlled UI visibility (press `G`)
+- Modern development setup with Vite & TypeScript
 
-Start development server.
+## Getting Started
+
+### Prerequisites
+- Node.js ≥18.0.0
+- Yarn package manager
+
+### Installation  
+`yarn install`
+
+### Development  
 `yarn dev`
+
+### Build for Production  
+`yarn build`
+
+## Controls
+- `G` Key: Toggle debug UI panel
+- Mouse: Orbit camera controls
+
+## Technical Stack
+- Three.js
+- TypeScript
+- Vite
+- dat.GUI
+
+## Learning Resources
+- [Three.js Documentation](https://threejs.org/docs/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
