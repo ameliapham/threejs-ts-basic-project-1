@@ -1,6 +1,6 @@
 ![Screenshot 2025-05-02 at 03 12 10](https://github.com/user-attachments/assets/b1e3a0f5-a76c-49fe-9513-a5046fd1b5bb)
 
-#Three.js + TypeScript + Vite Project
+# Three.js + TypeScript + Vite Project
 
 My second basic project is using **Three.js** with **TypeScript** and **Vite**.  
 The focus is on learning how to create a custom **BufferGeometry** and implement a simple **debug UI** to tweak parameters in real-time.
